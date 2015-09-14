@@ -4,9 +4,11 @@
   "description": "services for Access radius DB of mysql",
   "main": "App.js",
   "dependencies": {
+    "mysql": "^2.7.0",
+    "AAA-DBModel": "DuoSoftware/AAA-DBModel",
     "config": "^1.14.0",
-    "restify": "^3.0.3",
-    "AAA-DBModel": "DuoSoftware/AAA-DBModel"
+    "sequelize": "^3.3.2",
+    "restify": "^3.0.3"
   },
   "devDependencies": {},
   "scripts": {
