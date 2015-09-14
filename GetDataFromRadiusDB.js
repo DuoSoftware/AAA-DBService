@@ -36,7 +36,7 @@ var CreateUser = function(strObj, callback)
             var userObject = dbModel.radcheck.build({
                 //id:1,
                 username:strObj.username,
-                op:"==",
+                op:":=",
                 attribute:"Cleartext-Password",
                 value:strObj.password
             });
@@ -247,27 +247,32 @@ var CreateGroupWithAttributes = function(grpAttribAry, callback)
                grpAttribAry.forEach(function(grpAttribObj)
                 {
 
-                        dbModel.routerattribute.find({where: [{router:grpAttribObj.ROUTER},{attributename:grpAttribObj.ATTRIBUTE}],attributes:['routerattribute']})
+                        dbModel.routerattribute.find({where: [{router:grpAttribObj.ROUTER},{attributename:grpAttribObj.ATTRIBUTE},{routerattribute:{$ne:"Auth-Type"}}],attributes:['routerattribute']})
                             .then(function(rest)
                             {
 
 
                                 if(rest)
                                 {
-                                    var obj = {
+                                    console.log("\n");
+                                    console.log(rest.routerattribute);
+                                    console.log("\n");
+
+
+                                        var obj = {
                                         groupname : grpAttribObj.GROUP,
                                         attribute: rest.routerattribute,
                                         op:':=',
                                         value:grpAttribObj.VALUE
-                                    }
+                                        }
 
-                                    arr.push(obj);
-                                    count++;
+                                        arr.push(obj);
+                                        count++;
 
-                                    if(count >= limit)
-                                    {
+                                        if(count >= limit)
+                                        {
                                         callback(undefined, arr,grpAttribObj.GROUP,grpAttribObj.ROUTER);
-                                    }
+                                        }
 
 
                                 }
@@ -320,6 +325,7 @@ var hasAuthenticationType = function(AuthType,grpAttribAry,callback)
 
         //console.log(grpAttribAry[i].ATTRIBUTE);
         if (grpAttribAry[i].ATTRIBUTE == AuthType) {
+
 
            // console.log(AuthType);
            // console.log(grpAttribAry[i].ATTRIBUTE);
